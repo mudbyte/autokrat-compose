@@ -1,0 +1,19 @@
+version: "2"
+services:
+  backend:
+    image: ghcr.io/mudbyte/autokrat-backend
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/"
+    ports:
+      - "8080:8080"
+    networks:
+      - database
+  postgres:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: secret
+    networks:
+      - database
+
+networks:
+  database:
