@@ -4,16 +4,26 @@ services:
     image: ghcr.io/mudbyte/autokrat-backend
     environment:
       SPRING_DATASOURCE_URL: "jdbc:postgresql://postgres:5432/"
-    ports:
-      - "8080:8080"
     networks:
       - database
+      - proxy
   postgres:
     image: postgres
     environment:
       POSTGRES_PASSWORD: secret
     networks:
       - database
+  frontend:
+    image: ghcr.io/mudbyte/autokrat-frontend
+    networks:
+      - proxy
+  proxy:
+    build: proxy
+    ports:
+      - "80:80"
+    networks:
+      - proxy
 
 networks:
   database:
+  proxy:
